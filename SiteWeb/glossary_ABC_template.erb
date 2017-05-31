@@ -127,17 +127,13 @@ content:"\2192\00A0";
 <col width="300px">
 </colgroup>
 <tr>
-<td class="LETTER" name="LETTER"><a name="A"></a>A
-</td>
+<td class="LETTER" name="LETTER"><a name="A"></a>A</td>
 <td style="vertical-align:top;">
 <table id="qstable">
 <% itemListSortedEN.each do |item| -%>
-	<tr class="entry show" name="entry">
-	<td><a class="LU_LINK" href="./<%=item["pageName"]%>.html"><%=item["enWord"]%></a><a class="FRAME_LINK" href="./<%=item["pageName"]%>.html"></a></td>
-	</tr>
-	<tr class="entry show" name="entry">
-	<td><a class="LU_LINK" href="./<%=item["pageName"]%>.html"></a><a class="FRAME_LINK" href="./FRAMES/Frame_Progression.html">[<%=item["domain"]%>]</a></td>
-	</tr>
+<%if item["enWord"].chars.first.upcase == "A" -%>	
+<tr class="entry show" name="entry"><td><a class="LU_LINK" href="./<%=item["pageName"]%>.html"><%=item["enWord"]%></a><a class="FRAME_LINK" href="./<%=item["pageName"]%>.html"></a></td></tr><tr class="entry show" name="entry"><td><a class="LU_LINK" href="./<%=item["pageName"]%>.html"></a><a class="FRAME_LINK" href="./FRAMES/Frame_Progression.html">[<%=item["domain"]%>]</a></td></tr>
+<% end %>
 <% end -%>
 </table>
 </td>
@@ -145,6 +141,7 @@ content:"\2192\00A0";
 </td>
 </tr>
 </table>
+
 <table class="top" name="top">
 <colgroup>
 <col width="40px">
@@ -153,18 +150,21 @@ content:"\2192\00A0";
 <col width="300px">
 </colgroup>
 <tr>
+<td class="LETTER" name="LETTER"><a name="B"></a>B</td>
+<td style="vertical-align:top;">
+<table id="qstable">
+<% itemListSortedEN.each do |item| -%>
+<%if item["enWord"].chars.first.upcase == "B" -%>	
+<tr class="entry show" name="entry"><td><a class="LU_LINK" href="./<%=item["pageName"]%>.html"><%=item["enWord"]%></a><a class="FRAME_LINK" href="./<%=item["pageName"]%>.html"></a></td></tr><tr class="entry show" name="entry"><td><a class="LU_LINK" href="./<%=item["pageName"]%>.html"></a><a class="FRAME_LINK" href="./FRAMES/Frame_Progression.html">[<%=item["domain"]%>]</a></td></tr>
+<% end %>
+<% end -%>
+</table>
 </td>
 <td style="vertical-align:top;">
-<table id="qstable"></table>
-</td>
-<td style="vertical-align:top;">
-<table id="qstable"></table>
-</td>
-<td style="vertical-align:top;">
-<table id="qstable"></table>
 </td>
 </tr>
 </table>
+
 <table class="top" name="top">
 <colgroup>
 <col width="40px">
@@ -172,6 +172,23 @@ content:"\2192\00A0";
 <col width="300px">
 <col width="300px">
 </colgroup>
+<tr>
+<td class="LETTER" name="LETTER"><a name="C"></a>C</td>
+<td style="vertical-align:top;">
+<table id="qstable">
+<% itemListSortedEN.each do |item| -%>
+<%if item["enWord"].chars.first.upcase == "C" -%>	
+<tr class="entry show" name="entry"><td><a class="LU_LINK" href="./<%=item["pageName"]%>.html"><%=item["enWord"]%></a><a class="FRAME_LINK" href="./<%=item["pageName"]%>.html"></a></td></tr><tr class="entry show" name="entry"><td><a class="LU_LINK" href="./<%=item["pageName"]%>.html"></a><a class="FRAME_LINK" href="./FRAMES/Frame_Progression.html">[<%=item["domain"]%>]</a></td></tr>
+<% end %>
+<% end -%>
+</table>
+</td>
+<td style="vertical-align:top;">
+</td>
+</tr>
+</table>
+
+
 <tr>
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
