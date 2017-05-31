@@ -131,30 +131,17 @@ content:"\2192\00A0";
 </td>
 <td style="vertical-align:top;">
 <table id="qstable">
-<% itemList.each do |item| -%>
+<% itemListSortedEN.each do |item| -%>
 	<tr class="entry show" name="entry">
-	<td><a class="LU_LINK" href="./<%=item["pageName"]%>.html"><%=item["frWord"]%></a><a class="FRAME_LINK" href="./FRAMES/Frame_Ball_And_Goal.html"></a></td>
+	<td><a class="LU_LINK" href="./<%=item["pageName"]%>.html"><%=item["enWord"]%></a><a class="FRAME_LINK" href="./<%=item["pageName"]%>.html"></a></td>
+	</tr>
+	<tr class="entry show" name="entry">
+	<td><a class="LU_LINK" href="./<%=item["pageName"]%>.html"></a><a class="FRAME_LINK" href="./FRAMES/Frame_Progression.html">[<%=item["domain"]%>]</a></td>
 	</tr>
 <% end -%>
-<tr class="entry show" name="entry">
-<td><a class="LU_LINK" href="./LUs/Ball_And_Goal/LU_1758.html">acompte</a><a class="FRAME_LINK" href="./FRAMES/Frame_Ball_And_Goal.html"></a></td>
-</tr>
-<tr class="entry show" name="entry">
-<td><a class="LU_LINK" href="./LUs/Match_Temporal_Subdivision/LU_1331.html"></a><a class="FRAME_LINK" href="./FRAMES/Frame_Match_Temporal_Subdivision.html">[ immobilier, couple-famille, donation-succession, entreprise]</a></td>
-</tr>
-
 </table>
 </td>
 <td style="vertical-align:top;">
-<table id="qstable">
-<tr class="entry show" name="entry">
-<td><a class="LU_LINK" href="./LUs/Start/LU_1768.html">agency fees</a><a class="FRAME_LINK" href="./FRAMES/Frame_Start.html"></a></td>
-</tr>
-<tr class="entry show" name="entry">
-<td><a class="LU_LINK" href="./LUs/Progression/LU_1863.html"></a><a class="FRAME_LINK" href="./FRAMES/Frame_Progression.html">[ immobilier]
-</a></td>
-</tr>
-</table>
 </td>
 </tr>
 </table>

@@ -52,7 +52,7 @@ date = time.strftime("%Y-%m-%d")
 user = ENV['USER']
 
 # Création des structures recevant les infos
-fileDataStruct = Struct.new( :pageName, :frWord, :frExample, :enWord, :enExample )
+fileDataStruct = Struct.new( :pageName, :frWord, :frExample, :enWord, :enExample, :domain )
 
 # On crée le fichier d'énumérateurs
 ERB_glossary_page_template = ERB.new( File.read( './glossary_page_template.erb' ), nil, '-' )
@@ -71,7 +71,7 @@ end
 #			- itemList: Tableau des donées             	#
 #########################################################
 def compute_glossary_data_file( filePath, itemList )
-fileDataStruct = Struct.new( :pageName, :frWord, :frExample, :enWord, :enExample )
+fileDataStruct = Struct.new( :pageName, :frWord, :frExample, :enWord, :enExample, :domain )
 
 	# Ouverture du fichier si existant
 	if File.exist?(filePath) == false
@@ -88,13 +88,42 @@ fileDataStruct = Struct.new( :pageName, :frWord, :frExample, :enWord, :enExample
 		splitted_Line = line.split("\t")
 		# Mise en forme du mot
 		pageName = splitted_Line[2].downcase.gsub(/(\/| |'|-)/, "_").gsub(/(\(|\))/, "").gsub(/(,|_$|^_)/, "")
-		itemList << fileDataStruct.new( pageName, splitted_Line[0], splitted_Line[1], splitted_Line[2], splitted_Line[3] )
+		itemList << fileDataStruct.new( pageName, splitted_Line[0], splitted_Line[1], splitted_Line[2], splitted_Line[3], splitted_Line[4] )
 	  end
 	}
 	
 	puts "Computed " + itemList.count.to_s + " items"
 end
 
+#########################################################
+#	Tri par ordre alphabetique EN						#
+#-------------------------------------------------------#
+#	Args : 	- itemList: Tableau des donées             	#
+#########################################################
+def sort_glossary_data_en( itemList )
+fileDataStruct = Struct.new( :pageName, :frWord, :frExample, :enWord, :enExample, :domain )
+
+return itemList.sort_by { |item| [item.enWord.downcase] }
+	
+	itemList.each {|item|
+	#puts item.enWord
+	}
+end
+
+#########################################################
+#	Tri par ordre alphabetique FR						#
+#-------------------------------------------------------#
+#	Args : 	- itemList: Tableau des donées             	#
+#########################################################
+def sort_glossary_data_fr( itemList )
+fileDataStruct = Struct.new( :pageName, :frWord, :frExample, :enWord, :enExample, :domain )
+
+itemList = itemList.sort_by { |item| [item.frWord.downcase] }
+	
+	itemList.each {|item|
+	puts item.frWord
+	}
+end
 
 #########################################################
 #	Création des pages									#
@@ -104,13 +133,13 @@ end
 #			- namespace: Namespace             			#
 #########################################################
 def create_glossary_pages_file( outputPath, itemList, namespace )
-	fileDataStruct = Struct.new( :frWord, :frExample, :enWord, :enExample )
+	fileDataStruct = Struct.new( :frWord, :frExample, :enWord, :enExample, :domain )
 
 	puts "Creating pages in " + outputPath + "..."
 	
 	# Traitement du fichier
 	itemList.each {|item|
-	puts item.pageName
+	#puts item.pageName
 	File.open( outputPath + "/" + item.pageName + ".html", 'w' ) { |objectFile| objectFile.write( ERB_glossary_page_template.result( namespace.instance_eval { binding } )  ) }
 	}
 	
@@ -123,9 +152,16 @@ end
 #	Parcours du fichier CSV   #
 ###############################
 itemList = Array.new
+itemListSorted = Array.new
 
 # Traitement du fichier data existant
 compute_glossary_data_file( glossary_file, itemList )
+
+# Tri des mots
+itemListSortedEN = sort_glossary_data_en( itemList )
+	itemListSortedEN.each {|item|
+	puts item.enWord
+	}
 
 # Creation des fichiers
 namespaceFile = OpenStruct.new( glossary_file: glossary_file, itemList: itemList, date: date, user: user )
