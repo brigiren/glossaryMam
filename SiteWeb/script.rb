@@ -52,7 +52,7 @@ date = time.strftime("%Y-%m-%d")
 user = ENV['USER']
 
 # Création des structures recevant les infos
-fileDataStruct = Struct.new( :pageName, :frWord, :frExample, :enWord, :enExample, :domain )
+fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain )
 
 # On crée le fichier d'énumérateurs
 ERB_glossary_page_template = ERB.new( File.read( './glossary_page_template.erb' ), nil, '-' )
@@ -71,7 +71,7 @@ end
 #			- itemList: Tableau des donées             	#
 #########################################################
 def compute_glossary_data_file( filePath, itemList )
-fileDataStruct = Struct.new( :pageName, :frWord, :frExample, :enWord, :enExample, :domain )
+fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain )
 
 	# Ouverture du fichier si existant
 	if File.exist?(filePath) == false
@@ -86,9 +86,33 @@ fileDataStruct = Struct.new( :pageName, :frWord, :frExample, :enWord, :enExample
 	file.each {|line|
 	  if ((line.include? "mot anglais") == false )	# Exclusion de la première ligne
 		splitted_Line = line.split("\t")
+		# Affectation des variables
+		frWord = splitted_Line[1].strip
+		enWord = splitted_Line[4].strip
+		domain = splitted_Line[6]
+		frWordClass = splitted_Line[0]
+		enWordClass = splitted_Line[3]
 		# Mise en forme du mot
-		pageName = splitted_Line[2].downcase.gsub(/(\/| |'|-)/, "_").gsub(/(\(|\))/, "").gsub(/(,|_$|^_)/, "")
-		itemList << fileDataStruct.new( pageName, splitted_Line[0], splitted_Line[1], splitted_Line[2], splitted_Line[3], splitted_Line[4] )
+		pageName = splitted_Line[4].downcase.gsub(/(\/| |'|-)/, "_").gsub(/(\(|\))/, "").gsub(/(,|_$|^_)/, "")
+		# Mise en forme des exemples
+		puts splitted_Line[2]
+		
+		if( splitted_Line[2].include? frWord )
+			frExample = splitted_Line[2].gsub(frWord, "<b><i>"+frWord.to_s+"</i></b>")
+		else if ( splitted_Line[2].include? frWord.capitalize )
+			frExample = splitted_Line[2].gsub(frWord.capitalize, "<b><i>"+frWord.to_s.capitalize+"</i></b>")
+		end
+		end
+		
+		if( splitted_Line[5].include? enWord )
+			enExample = splitted_Line[5].gsub(enWord, "<b><i>"+enWord.to_s+"</i></b>")
+		else if ( splitted_Line[5].include? enWord.capitalize )
+			enExample = splitted_Line[5].gsub(enWord.capitalize, "<b><i>"+enWord.to_s.capitalize+"</i></b>")
+		end
+		end
+
+		puts frExample
+		itemList << fileDataStruct.new( pageName, frWordClass, frWord, frExample, enWordClass, enWord, enExample, domain )
 	  end
 	}
 	
@@ -101,7 +125,7 @@ end
 #	Args : 	- itemList: Tableau des donées             	#
 #########################################################
 def sort_glossary_data_en( itemList )
-fileDataStruct = Struct.new( :pageName, :frWord, :frExample, :enWord, :enExample, :domain )
+fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain )
 
 return itemList.sort_by { |item| [item.enWord.downcase] }
 	
@@ -116,12 +140,12 @@ end
 #	Args : 	- itemList: Tableau des donées             	#
 #########################################################
 def sort_glossary_data_fr( itemList )
-fileDataStruct = Struct.new( :pageName, :frWord, :frExample, :enWord, :enExample, :domain )
+fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain )
 
 itemList = itemList.sort_by { |item| [item.frWord.downcase] }
 	
 	itemList.each {|item|
-	puts item.frWord
+	#puts item.frWord
 	}
 end
 
@@ -133,7 +157,7 @@ end
 #			- namespace: Namespace             			#
 #########################################################
 def create_glossary_pages_file( outputPath, itemList, namespace )
-	fileDataStruct = Struct.new( :frWord, :frExample, :enWord, :enExample, :domain )
+fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain )
 
 	puts "Creating pages in " + outputPath + "..."
 	
@@ -160,7 +184,7 @@ compute_glossary_data_file( glossary_file, itemList )
 # Tri des mots
 itemListSortedEN = sort_glossary_data_en( itemList )
 	itemListSortedEN.each {|item|
-	puts item.enWord
+	#puts item.enWord
 	}
 
 # Creation des fichiers
