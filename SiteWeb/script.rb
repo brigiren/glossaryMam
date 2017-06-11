@@ -87,8 +87,8 @@ fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWo
 	  if ((line.include? "mot anglais") == false )	# Exclusion de la première ligne
 		splitted_Line = line.split("\t")
 		# Affectation des variables
-		frWord = splitted_Line[1].strip
-		enWord = splitted_Line[4].strip
+		frWord = splitted_Line[1].strip.squeeze(' ')
+		enWord = splitted_Line[4].strip.squeeze(' ')
 		domain = splitted_Line[6]
 		frWordClass = splitted_Line[0]
 		enWordClass = splitted_Line[3]
@@ -97,20 +97,27 @@ fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWo
 		# Mise en forme des exemples
 		puts splitted_Line[2]
 		
-		if( splitted_Line[2].include? frWord )
-			frExample = splitted_Line[2].gsub(frWord, "<b><i>"+frWord.to_s+"</i></b>")
-		else if ( splitted_Line[2].include? frWord.capitalize )
-			frExample = splitted_Line[2].gsub(frWord.capitalize, "<b><i>"+frWord.to_s.capitalize+"</i></b>")
+		frExampleSrc = splitted_Line[2].capitalize
+		enExampleSrc = splitted_Line[5].capitalize
+		
+		if( frExampleSrc.include? frWord )
+			frExample = frExampleSrc.gsub(frWord, "<b><i>"+frWord.to_s+"</i></b>")
+		else if ( frExampleSrc.include? frWord.capitalize )
+			frExample = frExampleSrc.gsub(frWord.capitalize, "<b><i>"+frWord.to_s.capitalize+"</i></b>")
+		else
+			frExample = frExampleSrc
 		end
 		end
 		
-		if( splitted_Line[5].include? enWord )
-			enExample = splitted_Line[5].gsub(enWord, "<b><i>"+enWord.to_s+"</i></b>")
-		else if ( splitted_Line[5].include? enWord.capitalize )
-			enExample = splitted_Line[5].gsub(enWord.capitalize, "<b><i>"+enWord.to_s.capitalize+"</i></b>")
+		if( enExampleSrc.include? enWord )
+			enExample = enExampleSrc.gsub(enWord, "<b><i>"+enWord.to_s+"</i></b>")
+		else if ( enExampleSrc.include? enWord.capitalize )
+			enExample = enExampleSrc.gsub(enWord.capitalize, "<b><i>"+enWord.to_s.capitalize+"</i></b>")
+		else
+			enExample = enExampleSrc
 		end
 		end
-
+		
 		puts frExample
 		itemList << fileDataStruct.new( pageName, frWordClass, frWord, frExample, enWordClass, enWord, enExample, domain )
 	  end
