@@ -52,7 +52,7 @@ date = time.strftime("%Y-%m-%d")
 user = ENV['USER']
 
 # Création des structures recevant les infos
-fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain )
+fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain, :moreInfo )
 
 # On crée le fichier d'énumérateurs
 ERB_glossary_page_template = ERB.new( File.read( './glossary_page_template.erb' ), nil, '-' )
@@ -71,7 +71,7 @@ end
 #			- itemList: Tableau des donées             	#
 #########################################################
 def compute_glossary_data_file( filePath, itemList )
-fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain )
+fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain, :moreInfo )
 
 	# Ouverture du fichier si existant
 	if File.exist?(filePath) == false
@@ -87,18 +87,17 @@ fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWo
 	  if ((line.include? "mot anglais") == false )	# Exclusion de la première ligne
 		splitted_Line = line.split("\t")
 		# Affectation des variables
-		frWord = splitted_Line[1].strip.squeeze(' ')
-		enWord = splitted_Line[4].strip.squeeze(' ')
-		domain = splitted_Line[6]
-		frWordClass = splitted_Line[0]
-		enWordClass = splitted_Line[3]
+		frWord = splitted_Line[1].to_s.strip.squeeze(' ')
+		enWord = splitted_Line[4].to_s.strip.squeeze(' ')
+		domain = splitted_Line[6].to_s
+		moreInfo = splitted_Line[7].to_s
+		frWordClass = splitted_Line[0].to_s
+		enWordClass = splitted_Line[3].to_s
 		# Mise en forme du mot
-		pageName = splitted_Line[4].downcase.gsub(/(\/| |'|-)/, "_").gsub(/(\(|\))/, "").gsub(/(,|_$|^_)/, "")
+		pageName = enWord.downcase.gsub(/(\/| |'|-)/, "_").gsub(/(\(|\))/, "").gsub(/(,|_$|^_)/, "")
 		# Mise en forme des exemples
-		puts splitted_Line[2]
-		
-		frExampleSrc = splitted_Line[2].capitalize
-		enExampleSrc = splitted_Line[5].capitalize
+		frExampleSrc = splitted_Line[2].to_s.capitalize
+		enExampleSrc = splitted_Line[5].to_s.capitalize
 		
 		if( frExampleSrc.include? frWord )
 			frExample = frExampleSrc.gsub(frWord, "<b><i>"+frWord.to_s+"</i></b>")
@@ -117,8 +116,7 @@ fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWo
 			enExample = enExampleSrc
 		end
 		end
-		
-		puts frExample
+
 		itemList << fileDataStruct.new( pageName, frWordClass, frWord, frExample, enWordClass, enWord, enExample, domain )
 	  end
 	}
@@ -132,7 +130,7 @@ end
 #	Args : 	- itemList: Tableau des donées             	#
 #########################################################
 def sort_glossary_data_en( itemList )
-fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain )
+fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain, :moreInfo )
 
 return itemList.sort_by { |item| [item.enWord.downcase] }
 	
@@ -147,7 +145,7 @@ end
 #	Args : 	- itemList: Tableau des donées             	#
 #########################################################
 def sort_glossary_data_fr( itemList )
-fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain )
+fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain, :moreInfo )
 
 itemList = itemList.sort_by { |item| [item.frWord.downcase] }
 	
@@ -164,7 +162,7 @@ end
 #			- namespace: Namespace             			#
 #########################################################
 def create_glossary_pages_file( outputPath, itemList, namespace )
-fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain )
+fileDataStruct = Struct.new( :pageName, :frWordClass, :frWord, :frExample, :enWordClass, :enWord, :enExample, :domain, :moreInfo )
 
 	puts "Creating pages in " + outputPath + "..."
 	

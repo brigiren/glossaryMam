@@ -1,13 +1,96 @@
-
 <html>
-
-<head><title>Effigloss - <%=item["frWord"]%>.<%=item["frWordClass"]%> / <%=item["enWord"]%>.<%=item["enWordClass"]%></title>
+<head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<meta content="Effigloss lexical unit entry" name="description" />
+<title>Effigloss - <%=item["frWord"]%>.<%=item["frWordClass"]%> / <%=item["enWord"]%>.<%=item["enWordClass"]%></title>
 <meta content="Florence Boscher" name="author" />
+<meta content="Effigloss lexical unit entry" name="description" />
 <link href="../../RESOURCES/LU_Styles.css" type="text/css" rel="stylesheet" /></head>
+<style>
+body{font-family:arial, helvetica, sans-serif; margin-left:1em; margin-right:1em;}
+td.LETTER {vertical-align:top; text-align:center; font-weight:bold;font-size:20pt;border-width:1px;border-style:solid;background-color:rgb(230,230,230)}
+td.HEADWORDS {vertical-align:top;border-width:1px;border-style:solid; padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:10px;}
+td.ABC_LINK {border-width:1px;border-style:solid;align:center}
+a.LU_LINK {font-size:10pt; text-decoration:none; color:black}
+a.FRAME_LINK {font-size:9pt; text-decoration:none; color:rgb(200,200,200);margin-left:20px}
+a.ABC_LINK {font-size:12pt; font-family:Courier;margin-left:10px; margin-right:10px }
+a:hover {font-weight:bold}
+h1 {font-size:26pt; text-align:center; font-family:sans-serif}
+body {margin-top:40px}
+tr.noshow {display: none;}
+table.noshow {display: none;}
+table.show {display: block;}
+div.content{
+background-color:rgb(240,240,240);
+position:fixed;
+padding:0.5em;
+padding-right:2em;
+left:13em;
+top:10em;
+}
+div.head {
+background-color:rgb(200,200,200);
+padding-left:1.5em;
+padding-top:0.5em;
+padding-bottom:0.5em;
+position:absolute;
+right:0em;
+left:0em;
+top:0em;
+width:100%;
+}
+div.main_menu {
+position:absolute;
+right: 1em;
+bottom: 0.2em;
+padding-right:1em;
+}
+div.main_menu_item {
+display:inline;
+background-color:black;
+color:yellow;
+font-family:Arial;
+font-size:13pt;
+padding-right:0.5em;
+padding-left:0.5em;
+padding-top:0.3em;
+padding-bottom:0.2em;
+margin-left:0.3em;
+margin-right:0.2em;
+}
+a.main_menu_item {
+color:yellow;
+text-decoration:none;
+}
+div.second_level_menu {
+background-color:rgb(230,230,230);
+position:absolute;
+top:10em;
+padding:0.5em;
+/* width:8em; */
+}
+h1.menu_name {
+font-family:Arial;
+font-size:13pt;
+font-weight:bold;
+text-align:left;
+}
+a.second_level_menu_item {
+color:black;
+font-family:Arial;
+font-size:10pt;
+text-decoration:none;
+display:block;
+margin-top:0.3em;
+margin-bottom:0.3em;
+padding-left:1em;
+font-weight:bold;
+}
+a.second_level_menu_item:before {
+content:"\2192\00A0";
+}
+</style>
 
-<body><div class="head"><img src="../img/LOGO.jpg" alt="Effigloss" class="logo" />
+<body><div class="head"><img src="../img/LOGO.jpg" alt="Effigloss" class="logo" width="90" height="100" />
 <div class="main_menu"></div>
 
 <div class="second_level_menu"><h1 class="menu_name">Glossaire</h1><a href="ABC.html" class="second_level_menu_item">Unités lexicales</a>
@@ -23,7 +106,7 @@
 
 <div>
 
-</tr></table><h2 class="section">Pour aller plus loin ...explication de la notion en anglais</h2>
+</tr></table><h2 class="section"><%=item["moreInfo"]%></h2>
 
 </div>
 </body>
